@@ -1,3 +1,4 @@
 # Langchain Concepts
 
-1. [Langchain Common Expression](./src/chat/basic.py)
+Workflow:
+<img src="./workflow.excalidraw.png" style="object-fit: contain">
