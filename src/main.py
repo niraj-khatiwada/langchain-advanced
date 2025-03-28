@@ -20,9 +20,16 @@ if __name__ == "__main__":
         temperature=0,
     )
 
+    name = input(
+        """Enter name of a person:
+(Optionally, you can supply any additional detail about the person for best match)
+For example: Bill Gates, Co-Founder of Microsoft, Gates Foundation
+"""
+    )
+
     linkedin_agent = LinkedInAgent()
     linkedin_url = linkedin_agent.get_profile_url(
-        name="Bill Gates",
+        name=name,
         llm=llm,
     )
     print(linkedin_url)
@@ -31,7 +38,6 @@ if __name__ == "__main__":
         print("Linked profile not found for given name")
     else:
         linkedin_id = LinkedInService.extract_id_from_url(linkedin_url)
-        print(">>>>", linkedin_id)
         linkedin_service = LinkedInService()
         user_detail = linkedin_service.get_user_detail(username=linkedin_id, mock=False)
         prompt_template = PromptTemplate(
@@ -48,6 +54,5 @@ if __name__ == "__main__":
             input_variables=["profile_data"],
         )
         chain = prompt_template | llm
-        print(">>>", user_detail)
         res = chain.invoke(input={"profile_data": str(user_detail)})
         print(res)

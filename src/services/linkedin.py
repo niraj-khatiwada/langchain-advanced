@@ -101,6 +101,8 @@ class LinkedInService:
             res = requests.get(
                 f"https://api.scrapingdog.com/linkedin?api_key={SCRAPING_DOG_API_KEY}&type=profile&linkId={username}"
             )
+            if not res.ok:
+                raise Exception("LinkedIn profile not found")
             user_json_list = res.json()
             if type(user_json_list).__name__ == "list" and len(user_json_list) > 0:
                 user_json = user_json_list[0]
